@@ -1,19 +1,21 @@
 <div class="navbar">
     <div class="left">
         <a href="{% url "homePage" %}">Home</a>
-        {% if user.UserType == "recuter"%}
+        {% if user.UserType == "recuter" or user.UserType == "admin" %}
         <a href="{% url "createjobPage" %}">Create Job</a>
         {% endif %}
         <a href="{% url "findjobPage" %}">Find Job</a>
+        
         <a href="#">Create Resume</a>
     </div>
     <div class="right">
     {% if user.is_authenticated %}
         <div class="if_login">
-            <img src="/static/image/defolt_profile.jpg" alt="" class="profile-pic">
+            <img src="/{{user.Pic}}" alt="" class="profile-pic">
             <div class="dropdown">
-                <a href="#">View Profile</a>
+                <a href="{% url 'userviewPage' %}">View Profile</a>
                 <a href="#">Edit Profile</a>
+                <a href="{% url "change_password" %}">Password change</a>
                 <a href="{% url "logoutPage" %}">Logout</a>
             </div>
         </div>

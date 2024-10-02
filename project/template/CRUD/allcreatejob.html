@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Advertisement</title>
+    <link rel="stylesheet" href="static/findjobPage.css">
+</head>
+    {% for i in data %}
+    <div class="job-ad">
+        <h1>Company Name: {{i.com_name}}</h1>
+        <h1>Company Title: {{i.com_title}}</h1>
+        <h1>Job Title: {{i.JobTitle}}</h1>
+        <p><strong>Number of Openings:</strong> {{i.num_openings}}</p>
+        <p><strong>Category:</strong> {{i.category}}</p>
+        
+        <h2>Job Description</h2>
+        <p>{{i.job_description}}</p>
+        
+        <h2>Required Skills</h2>
+        <ul>
+            <li>{{i.RequiredSkills}}</li>
+        </ul>
+
+        <h3>Creade by: {{i.user.username}} </h3> {% comment %} juset fan {% endcomment %}
+        
+        {% comment %} <h2>How to Apply</h2>
+        <p>Send your resume and portfolio to <a href="mailto:hr@example.com">hr@example.com</a>.</p> {% endcomment %}
+
+        <div class="button-group">
+            <div class="bas_user">
+                <a href="{% url 'editeJob' i.id %}" class="btn edit">Edit Job</a>
+                <a href="{% url 'deletePage2' i.id %}" class="btn submit">Delete Job</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+</body>
+</html>
