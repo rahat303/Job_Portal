@@ -1,0 +1,49 @@
+{% extends "include/m.html" %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Advertisement</title>
+    <link rel="stylesheet" href="static/findjobPage.css">
+</head>
+<body>
+    <div class="search-bar">
+        <input type="text" placeholder="Search for jobs...">
+        <button type="button">Search</button>
+    </div>
+    
+    {% for i in data %}
+    <div class="job-ad">
+        <h1>Job Title: {{i.JobTitle}}</h1>
+        <p><strong>Number of Openings:</strong> {{i.NumberOfOpenings}}</p>
+        <p><strong>Category:</strong> {{i.Categry}}</p>
+        
+        <h2>Job Description</h2>
+        <p>{{i.JobDescription}}</p>
+        
+        <h2>Required Skills</h2>
+        <ul>
+            <li>{{i.RequiredSkills}}</li>
+        </ul>
+
+        <h3>Creade by: {{i.user.username}} </h3> {% comment %} juset fan {% endcomment %}
+
+        <div class="button-group">
+        {% if user.UserType == "seckeer" %}
+            <a href="apply.html" class="btn apply">Apply Job</a>
+        {% elif user.UserType == "recuter" %}
+            <div class="bas_user">
+                <a href="{% url "editePage" i.id %}" class="btn edit">Edit Job</a>
+                <a href="{% url 'deletePage' i.id %}" class="btn submit">Delete Job</a>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+</body>
+</html>
+
+{% endblock body %}
