@@ -14,37 +14,37 @@ def homePage(request):
 # <-- add operation -->
 @login_required
 def createjobPage(request):
-    
-    if request.method == "POST":
-        current_user = request.user
-        company_name=request.POST.get("company_name")
-        company_title=request.POST.get("company_title")
-        company_description=request.POST.get("company_description")
-        company_logo=request.FILES.get("company_logo")
-        company_location=request.POST.get("company_location")
-        job_title=request.POST.get("job_title")
-        num_openings=request.POST.get("num_openings")
-        category=request.POST.get("category")
-        job_description=request.POST.get("job_description")
-        qualifications=request.POST.get("qualifications")
-        salary=request.POST.get("salary")
-        deadline=request.POST.get("deadline")
-
-        data=CreateJobModel.objects.create(
-            user = current_user,
-            com_name=company_name,
-            com_title=company_title,
-            com_description=company_description,
-            com_logo=company_logo,
-            com_location=company_location,
-            job_title=job_title,
-            num_openings=num_openings,
-            category=category,
-            job_description=job_description,
-            qualifications=qualifications,
-            salary=salary,
-            deadline=deadline,
-        )
+    carent_user=request.user
+    if carent_user.UserType == "recuter":
+        if request.method == "POST":
+            current_user = request.user
+            company_name=request.POST.get("company_name")
+            company_title=request.POST.get("company_title")
+            company_description=request.POST.get("company_description")
+            company_logo=request.FILES.get("company_logo")
+            company_location=request.POST.get("company_location")
+            job_title=request.POST.get("job_title")
+            num_openings=request.POST.get("num_openings")
+            category=request.POST.get("category")
+            job_description=request.POST.get("job_description")
+            qualifications=request.POST.get("qualifications")
+            salary=request.POST.get("salary")
+            deadline=request.POST.get("deadline")
+            data=CreateJobModel.objects.create(
+                user = current_user,
+                com_name=company_name,
+                com_title=company_title,
+                com_description=company_description,
+                com_logo=company_logo,
+                com_location=company_location,
+                job_title=job_title,
+                num_openings=num_openings,
+                category=category,
+                job_description=job_description,
+                qualifications=qualifications,
+                salary=salary,
+                deadline=deadline,
+            )
         return redirect("findjobPage")
 
     return render(request,"core_conten/createjobPage.html")
@@ -63,13 +63,46 @@ def deletePage(request,myid):
     data.delete()
     return redirect("findjobPage")
 
-def deletePage2(request,myid):
-    data=CreateJobModel.objects.get(id=myid)
-    data.delete()
-    return redirect("allcreatejob")
+# def deletePage2(request,myid):
+#     data=CreateJobModel.objects.get(id=myid)
+#     data.delete()
+#     return redirect("allcreatejob")
 
 def editeJob(request,myid):
-    return render("CRUD/editeJob.html")
+    data=CreateJobModel.objects.get(id=myid)
+    carent_user=request.user
+    if carent_user.UserType == "recuter":
+        if request.method == "POST":
+            current_user = request.user
+            company_name=request.POST.get("company_name")
+            company_title=request.POST.get("company_title")
+            company_description=request.POST.get("company_description")
+            company_logo=request.FILES.get("company_logo")
+            company_location=request.POST.get("company_location")
+            job_title=request.POST.get("job_title")
+            num_openings=request.POST.get("num_openings")
+            category=request.POST.get("category")
+            job_description=request.POST.get("job_description")
+            qualifications=request.POST.get("qualifications")
+            salary=request.POST.get("salary")
+            deadline=request.POST.get("deadline")
+            data=CreateJobModel.objects.create(
+                user = current_user,
+                com_name=company_name,
+                com_title=company_title,
+                com_description=company_description,
+                com_logo=company_logo,
+                com_location=company_location,
+                job_title=job_title,
+                num_openings=num_openings,
+                category=category,
+                job_description=job_description,
+                qualifications=qualifications,
+                salary=salary,
+                deadline=deadline,
+            )
+            return redirect("findjobPage")
+    return render(request,"CRUD/editeJob.html",{"data":data})
 
 def userviewPage(request):
     return render(request, "authentication/user/userviewPage.html")

@@ -1,0 +1,79 @@
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.card h2 {
+    text-align: left;
+    color: #333333
+    
+}
+
+.company-info, .job-info {
+    margin-bottom: 20px;
+}
+
+.job-info h3 {
+    color: #555;
+    border-bottom: 1px solid #ddd;
+
+    padding-bottom: 8px;
+}
+
+.company-info p, .job-info p {
+    margin: 8px 0;
+    color: #666;
+    
+}
+
+strong {
+    color: #333;
+}
+
+#job_det{
+    color: #000000;
+}
+
+#company-title-display{
+    color: #555;
+}
+
+#logo .company-logo-display{
+    display: block;
+    max-width: 100px;
+    margin-top: auto ;
+    margin-right:10px;
+}
+
+.button-group {
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-block; /* Make anchor behave like a button */
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #11c7df;
+}
+
+.btn.edit {
+    background-color: #e2cd0d; /* Green for Submit */
+}
+
+.btn.submit {
+    background-color: #e20d0d; /* Green for Submit */
+}

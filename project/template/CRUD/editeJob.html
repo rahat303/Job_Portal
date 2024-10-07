@@ -1,0 +1,60 @@
+{% extends "include/m.html" %}
+{% block title_body %}createjobpage{% endblock title_body %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Job Listing</title>
+    <link rel="stylesheet" href="/static/createjobPage.css">
+</head>
+<body>
+    <div class="job-form">
+        <h1>Update your job informetion</h1>
+        <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <input type="text" id="company-name" name="company_name" value="{{data.id}}" hidden>
+        
+            <label for="company-name">Company Name:</label>
+            <input type="text" id="company-name" name="company_name" value="{{data.com_name}}" required>
+
+            <label for="company-title">Company Title:</label>
+            <input type="text" id="company-title" name="company_title" value="{{data.com_title}}" required>
+
+            <label for="company-description">Company Description:</label>
+            <textarea id="company-description" name="company_description" rows="4" value="" required>{{data.com_description}}</textarea>
+
+            <label for="company-logo">Company Logo:</label>
+            <input type="file" id="company-logo" name="company_logo" accept="image/*" value="{{data.com_logo}}" required>
+
+            <label for="company-location">Company Location:</label>
+            <input type="text" id="company-location" name="company_location" value="{{data.com_location}}" required>
+
+            <label for="job-title">Job Title:</label>
+            <input type="text" id="job-title" name="job_title" value="{{data.job_title}}" required>
+
+            <label for="num-openings">Number of Openings:</label>
+            <input type="number" id="num-openings" name="num_openings" value="{{data.num_openings}}" required>
+
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" value="{{data.category}}" required>
+
+            <label for="job-description">Job Description:</label>
+            <textarea id="job-description" name="job_description" rows="4" value="" required>{{data.job_description}}</textarea>
+
+            <label for="qualifications">Qualifications:</label>
+            <textarea id="qualifications" name="qualifications" rows="4" value="" required>{{data.qualifications}}</textarea>
+
+            <label for="salary">Salary:</label>
+            <input type="text" id="salary" name="salary" value="{{data.salary}}" required>
+
+            <label for="deadline">Application Deadline:</label>
+            <input type="date" id="deadline" name="deadline" value="{{data.deadline|date:'Y-m-d'}}" required>
+        
+            <button type="submit" class="btn submit">Update Job Info</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock body %}
