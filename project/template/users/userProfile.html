@@ -1,0 +1,31 @@
+{% extends "include/m.html" %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/static/userProfile.css">
+</head>
+<body>
+    <div class="profile-container">
+        <img src="/{{ user.profile1.Photo }}" alt="Profile Picture" class="profile-pic">
+        <h1 class="username">{{ user.DisplyName }}</h1>
+        <p class="bio">{{ user.profile1.Bio }}</p>
+        <ul class="info-list">
+            <li><strong>User Type:</strong>{{ user.UserType }}</li>
+            <li><strong>Email:</strong>{{ user.email }}</li>
+            <li><strong>Contract Number:</strong>{{ user.profile1.ContractNumber }}</li>
+            <li><strong>Website:</strong>{{ user.profile1.WebLink }}</li>
+        </ul>
+        <div class="button-container">
+            <a href="{% url 'editeProfile' %}"><button class="edit-button">Edit Profile</button></a>
+            {% if user.UserType == "recruiters" %}
+            <a href="{% url 'allPost' %}"><button class="all-posts-button">View All Posts</button></a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+{% endblock body %}

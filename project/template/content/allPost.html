@@ -1,0 +1,42 @@
+{% extends "include/m.html" %}
+{% block title %}Your Job Post{% endblock title %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hear is the all job you post...</title>
+    <link rel="stylesheet" href="/static/allPost.css">
+</head>
+<body>
+    <table>
+        <caption>Hear is the all job you post...</caption>
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Company Name</th>
+                <th>Qualifications</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{i.job_title}}</td>
+                <td>{{i.com_name}}</td>
+                <td>{{i.qualifications}}</td>
+                <td><img src="/{{i.com_logo}}" alt="Company Logo"></td>
+                <td>
+                    <a href="{% url "editeJob" i.id %}" class="edit-button">Edit Job</a>
+                    <a href="{% url "deleteJob" i.id %}" class="delete-button">Delete Job</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+{% endblock body %}

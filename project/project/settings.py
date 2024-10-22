@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-wufzzj03#h_f%%a-eqkzkm!0ye__5mo#86#7geg&@s%7djz3b8'
+SECRET_KEY = 'django-insecure-!4d+9)394d0f*u&+92s$0clm#o=wmbch%ai#fr@3k+g$+1m(6j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -113,8 +113,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
+    "/var/www/static/",
 ]
 
-AUTH_USER_MODEL="app.CustomUser"
-
 LOGIN_URL="loginPage"
+
+AUTH_USER_MODEL='app.CustomUserModel'

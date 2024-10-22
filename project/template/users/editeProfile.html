@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/static/editeProfile.css">
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Edit Profile</h1>
+        <div class="profile-pic-container">
+            <img id="profile-pic-preview" src="/{{ user.profile1.Photo }}" alt="Current Profile Picture" >
+            <input type="file" id="profile-pic" name="profile-pic" accept="image/*" onchange="previewImage()">
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="form-group">
+                <input type="text" id="username" name="user_id" value="{{data.id}}" hidden>
+                <label for="username">Display Name</label>
+                <input type="text" id="username" name="DisplyName" value="{{data.DisplyName}}">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="Email" value="{{data.email}}">
+            </div>
+            <div class="form-group">
+                <label for="location">Contract Number</label>
+                <input type="text" id="location" name="contractnumber" value="{{ user.profile1.ContractNumber }}">
+            </div>
+            <div class="form-group">
+                <label for="website">Website</label>
+                <input type="url" id="website" name="website" value="{{ user.profile1.WebLink }}">
+            </div>
+            <button type="submit" class="save-button">Save Changes</button>
+            <a href="{% url 'deleteProfile' %}"><button type="button" class="delete-button">Delete Acount</button></a>
+            <a href="{% url 'userProfile' %}"><button type="button" class="skip-button">Skip Changes</button></a>
+        </form>
+    </div>
+</body>
+</html>

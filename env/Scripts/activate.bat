@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\RedmiBook\Desktop\web development\job protal\env
+set VIRTUAL_ENV=D:\exam_22_10_24\env
 
 if not defined PROMPT set PROMPT=$P$G
 

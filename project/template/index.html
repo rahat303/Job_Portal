@@ -1,4 +1,6 @@
 {% extends "include/m.html" %}
+{% block title %}Home Page{% endblock title %}
 {% block body %}
-<h1>This is my home page</h1>
+{% include "include/messages.html" %}
+    <h1>This is my home page</h1>
 {% endblock body %}

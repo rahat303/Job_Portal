@@ -3,67 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> </title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #2c3e50;
-            padding: 10px 20px;
-            color: white;
-        }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .navbar a:hover {
-            text-decoration: underline;
-        }
-        .navbar .left a {
-            margin-right: 20px;
-        }
-        .navbar .right {
-            position: relative;
-            display: inline-block;
-        }
-        .navbar .right .profile-pic {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        .navbar .right .dropdown {
-            display: none;
-            position: absolute;
-            background-color: white;
-            color: black;
-            right: 0;
-            top: 50px;
-            min-width: 160px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-        .navbar .right .dropdown a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .navbar .right .dropdown a:hover {
-            background-color: #ddd;
-        }
-        .navbar .right:hover .dropdown {
-            display: block;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/static/m.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>{% block title %}Navbar{% endblock title %}</title>
 </head>
 <body>
     {% include "include/navber.html" %}

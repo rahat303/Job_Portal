@@ -1,192 +1,180 @@
-from django.shortcuts import render,redirect,HttpResponse
-from django.contrib.auth import authenticate,login,logout
+from django.shortcuts import render,redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 from app.models import *
 
+def loginPage(req):
+    if req.method == "POST":
+        user_name=req.POST.get('user_name')
+        pass_word=req.POST.get('pass_word')
 
-from django.contrib.auth.hashers import check_password
-from django.contrib.auth import update_session_auth_hash
+        user=authenticate(username=user_name,password=pass_word)
 
-
-def homePage(request):
-    return render(request,"index.html")
-
-# <-- add operation -->
-@login_required
-def createjobPage(request):
-    carent_user=request.user
-    if carent_user.UserType == "recuter":
-        if request.method == "POST":
-            current_user = request.user
-            company_name=request.POST.get("company_name")
-            company_title=request.POST.get("company_title")
-            company_description=request.POST.get("company_description")
-            company_logo=request.FILES.get("company_logo")
-            company_location=request.POST.get("company_location")
-            job_title=request.POST.get("job_title")
-            num_openings=request.POST.get("num_openings")
-            category=request.POST.get("category")
-            job_description=request.POST.get("job_description")
-            qualifications=request.POST.get("qualifications")
-            salary=request.POST.get("salary")
-            deadline=request.POST.get("deadline")
-            data=CreateJobModel.objects.create(
-                user = current_user,
-                com_name=company_name,
-                com_title=company_title,
-                com_description=company_description,
-                com_logo=company_logo,
-                com_location=company_location,
-                job_title=job_title,
-                num_openings=num_openings,
-                category=category,
-                job_description=job_description,
-                qualifications=qualifications,
-                salary=salary,
-                deadline=deadline,
-            )
-        return redirect("findjobPage")
-
-    return render(request,"core_conten/createjobPage.html")
-
-def findjobPage(request):
-    current_user = request.user
-
-    data = CreateJobModel.objects.all()
-    return render(request,"core_conten/findjobPage.html",{"data":data})
-# </-- add operation -->
-
-
-# <-- frood delete, edite operation -->
-def deletePage(request,myid):
-    data=CreateJobModel.objects.get(id=myid)
-    data.delete()
-    return redirect("findjobPage")
-
-# def deletePage2(request,myid):
-#     data=CreateJobModel.objects.get(id=myid)
-#     data.delete()
-#     return redirect("allcreatejob")
-
-def editeJob(request,myid):
-    data=CreateJobModel.objects.get(id=myid)
-    carent_user=request.user
-    if carent_user.UserType == "recuter":
-        if request.method == "POST":
-            current_user = request.user
-            company_name=request.POST.get("company_name")
-            company_title=request.POST.get("company_title")
-            company_description=request.POST.get("company_description")
-            company_logo=request.FILES.get("company_logo")
-            company_location=request.POST.get("company_location")
-            job_title=request.POST.get("job_title")
-            num_openings=request.POST.get("num_openings")
-            category=request.POST.get("category")
-            job_description=request.POST.get("job_description")
-            qualifications=request.POST.get("qualifications")
-            salary=request.POST.get("salary")
-            deadline=request.POST.get("deadline")
-            data=CreateJobModel.objects.create(
-                user = current_user,
-                com_name=company_name,
-                com_title=company_title,
-                com_description=company_description,
-                com_logo=company_logo,
-                com_location=company_location,
-                job_title=job_title,
-                num_openings=num_openings,
-                category=category,
-                job_description=job_description,
-                qualifications=qualifications,
-                salary=salary,
-                deadline=deadline,
-            )
-            return redirect("findjobPage")
-    return render(request,"CRUD/editeJob.html",{"data":data})
-
-def userviewPage(request):
-    return render(request, "authentication/user/userviewPage.html")
-
-def allcreatejob(request):
-    current_user = request.user
-
-    data = CreateJobModel.objects.all()
-    return render(request, "CRUD/allcreatejob.html",{"data":data})
-# </-- frood delete, edite operation -->
-
-
-# <--authentication part -->
-def loginPage(request):
-    if request.method=="POST":
-        UserName=request.POST.get("user_name")
-        Password=request.POST.get("password")
-        user=authenticate(username=UserName,password=Password)
+        print(user)
 
         if user:
-            login(request,user)
+            print("Under user condition")
+            login(req,user)
+            messages.success(req,'Login Successful!')
             return redirect("homePage")
         else:
-            HttpResponse("Your user info is rong")
-    return render(request,"authentication/loginPage.html")
+            messages.warning(req,"your username and password is roong")
+            return render(req,"auth/loginPage.html")
 
-def signupPage(request):
-    if request.method=="POST":
-        user_type=request.POST.get('user_type')
-        gender=request.POST.get('gender')
-        City=request.POST.get('City')
-        profile_pic=request.FILES.get('profile_pic')
-        first_name=request.POST.get('first_name')
-        last_name=request.POST.get('last_name')
-        user_name=request.POST.get('user_name')
-        email=request.POST.get('email')
-        password=request.POST.get('password')
-        confirm_password=request.POST.get('confirm_password')
-        if password==confirm_password:
-            user=CustomUser.objects.create_user(
-                UserType=user_type,
-                GenderType=gender,
-                City=City,
-                Pic=profile_pic,
-                first_name=first_name,
-                last_name=last_name,
-                username=user_name,
-                email=email,
-                password=confirm_password,
+    return render(req,"auth/loginPage.html")
+
+def signupPage(req):
+    if req.method == "POST":
+        User_type=req.POST.get("User_type")
+        User_name=req.POST.get("User_name")
+        Display_name=req.POST.get("Display_name")
+        Email=req.POST.get("Email")
+        Pass_word=req.POST.get("Pass_word")
+        Confirm_password=req.POST.get("Confirm_password")
+
+        if Pass_word == Confirm_password:
+            user=CustomUserModel.objects.create_user(
+                UserType=User_type,
+                username=User_name,
+                DisplyName=Display_name,
+                email=Email,
+                password=Confirm_password,
             )
-            return redirect("loginPage")
-        else:
-            return HttpResponse('error')
-    return render(request,"authentication/signupPage.html")
+            if User_type == "recruiters":
+                RecruitersProfileModel.objects.create(user=user)
+            elif User_type == "jobseekers":
+                JobseekersProfileModel.objects.create(user=user)
 
-def logoutPage(request):
-    logout(request)
+            messages.success(req,'Registration Successful!')
+            return render(req,"auth/loginPage.html")
+        else:
+            messages.warning(req,'Password not matched!')
+            return render(req,"signupPage.html")
+
+    return render(req,"auth/signupPage.html")
+
+def logoutPage(req):
+    logout(req)
+    messages.success(req,'Logout Successful!')
     return redirect("homePage")
 
-# </--authentication part -->
+def homePage(req):
+    return render(req,"index.html")
 
+@login_required
+def userProfile(req):
+    return render(req,"users/userProfile.html")
 
-def change_password(request):
-    current_user = request.user
-    if request.method == "POST":
-            old_password=request.POST.get("current_password")
-            new_password=request.POST.get("new_password")
-            confirm_password=request.POST.get("confirm_password")
-            
-            if check_password(old_password, current_user.password):
-                
-                if old_password == new_password:
-                    return HttpResponse("You can't use old password again!")
-                
-                elif new_password==confirm_password:
-                    current_user.set_password(new_password)
-                    current_user.save()
+@login_required
+def editeProfile(req):
+    data=req.user
+    if req.method == "POST":
+        user_id=req.POST.get("user_id")
+        DisplyName=req.POST.get("DisplyName")
+        Email=req.POST.get("Email")
+        contractnumber=req.POST.get("contractnumber")
+        website=req.POST.get("website")
 
-                    update_session_auth_hash(request,current_user)
+    return render(req,"users/editeProfile.html",{"data":data})
 
-                    return redirect("homePage")
-                else:
-                    return HttpResponse("password not match")
-            else:
-                return HttpResponse("old password not match")
+@login_required
+def deleteProfile(req):
+    myid=req.user.id
+    data=CustomUserModel.objects.get(id=myid)
+    data.delete()
+    return redirect('logoutPage')
 
-    return render(request,"authentication/user/changePassword.html")
+@login_required
+def addJobPage(req):
+    carent_user=req.user
+    if carent_user.UserType == "recruiters":
+        if req.method == "POST":
+            carent_user = req.user
+            company_name=req.POST.get("company_name")
+            company_title=req.POST.get("company_title")
+            company_description=req.POST.get("company_description")
+            company_logo=req.FILES.get("company_logo")
+            company_location=req.POST.get("company_location")
+            job_title=req.POST.get("job_title")
+            num_openings=req.POST.get("num_openings")
+            category=req.POST.get("category")
+            job_description=req.POST.get("job_description")
+            qualifications=req.POST.get("qualifications")
+            salary=req.POST.get("salary")
+            deadline=req.POST.get("deadline")
+            data=CreateJobModel(
+                user = carent_user,
+                com_name=company_name,
+                com_title=company_title,
+                com_description=company_description,
+                com_logo=company_logo,
+                com_location=company_location,
+                job_title=job_title,
+                num_openings=num_openings,
+                category=category,
+                job_description=job_description,
+                qualifications=qualifications,
+                salary=salary,
+                deadline=deadline,
+            )
+            data.save()
+            return redirect("findjobPage")
+    return render(req, "content/createJob.html")
+
+@login_required
+def findjobPage(req):
+    data = CreateJobModel.objects.all()
+    return render(req,"content/findJob.html",{"data":data})
+
+@login_required
+def allPost(req):
+    CU=req.user
+    data=CreateJobModel.objects.filter(user=CU)
+    return render(req,"content/allPost.html",{"data":data})
+
+@login_required
+def deleteJob(req,job_id):
+    data=CreateJobModel.objects.get(id=job_id)
+    data.delete()
+    return redirect("allPost")
+
+@login_required
+def editeJob(req,job_id):
+    data=CreateJobModel.objects.get(id=job_id)
+    carent_user=req.user
+    if carent_user.UserType == "recruiters":
+        if req.method == "POST":
+            carent_user = req.user
+            job_id=req.POST.get("job_id")
+            company_name=req.POST.get("company_name")
+            company_title=req.POST.get("company_title")
+            company_description=req.POST.get("company_description")
+            company_logo=req.FILES.get("company_logo")
+            company_location=req.POST.get("company_location")
+            job_title=req.POST.get("job_title")
+            num_openings=req.POST.get("num_openings")
+            category=req.POST.get("category")
+            job_description=req.POST.get("job_description")
+            qualifications=req.POST.get("qualifications")
+            salary=req.POST.get("salary")
+            deadline=req.POST.get("deadline")
+            data=CreateJobModel(
+                id=job_id,
+                user = carent_user,
+                com_name=company_name,
+                com_title=company_title,
+                com_description=company_description,
+                com_logo=company_logo,
+                com_location=company_location,
+                job_title=job_title,
+                num_openings=num_openings,
+                category=category,
+                job_description=job_description,
+                qualifications=qualifications,
+                salary=salary,
+                deadline=deadline,
+            )
+            data.save()
+            return redirect("allPost")
+    return render(req,"content/editeJob.html",{"data":data})

@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height for vertical centering */
+}
+
+.profile-container {
+    background-color: #fff;
+    border-radius: 15px; /* Rounded corners for a card effect */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    max-width: 400px;
+    padding: 30px; /* Padding for inner spacing */
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+.profile-pic-container {
+    margin-bottom: 20px; /* Space below the image */
+}
+
+.profile-pic {
+    border-radius: 50%; /* Make the profile picture round */
+    width: 150px; /* Set size */
+    height: 150px; /* Set size */
+    object-fit: cover; /* Cover to maintain aspect ratio */
+}
+
+input[type="file"] {
+    margin-top: 10px; /* Space above the file input */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Space between form fields */
+    text-align: left; /* Align labels and inputs to the left */
+}
+
+label {
+    display: block; /* Make label a block element */
+    margin-bottom: 5px; /* Space below label */
+    font-weight: bold; /* Bold for emphasis */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="url"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding for inputs */
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.save-button {
+    background-color: #007BFF; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.save-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.delete-button {
+    background-color: #f51f1f; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.delete-button:hover {
+    background-color: #f51f1f; /* Darker blue on hover */
+}
+
+.skip-button {
+    background-color: #20f761; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.skip-button:hover {
+    background-color: #20f761; /* Darker blue on hover */
+}
