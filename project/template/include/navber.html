@@ -3,11 +3,12 @@
         <a href="{% url "homePage" %}">Home</a>
         <a href="{% url 'addJobPage' %}">Add Job</a>
         <a href="{% url 'findjobPage' %}">Find Job</a>
+        <a href="{% url 'recommendedPage' %}">Recommended Job</a>
     </div>
     <div class="navbar-right">
         {% if user.is_authenticated %}
         <div class="user-dropdown">
-            <img src="/{{user.profile1.Photo}}" alt="{{user.DisplyName}}">
+            <img src="/{{user.Photo}}" alt="{{user.DisplyName}}">
             <div class="dropdown-content">
                 <a href="{% url 'userProfile' %}">Profile</a>
                 <a href="#settings">Settings</a>

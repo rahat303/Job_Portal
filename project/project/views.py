@@ -1,17 +1,17 @@
+from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
 from app.models import *
 
 def loginPage(req):
     if req.method == "POST":
         user_name=req.POST.get('user_name')
         pass_word=req.POST.get('pass_word')
-
+        
         user=authenticate(username=user_name,password=pass_word)
-
-        print(user)
 
         if user:
             print("Under user condition")
@@ -68,15 +68,44 @@ def userProfile(req):
 
 @login_required
 def editeProfile(req):
-    data=req.user
-    if req.method == "POST":
-        user_id=req.POST.get("user_id")
-        DisplyName=req.POST.get("DisplyName")
-        Email=req.POST.get("Email")
-        contractnumber=req.POST.get("contractnumber")
-        website=req.POST.get("website")
+    current_user=req.user
+    if current_user.UserType == "recruiters":
+        if req.method == "POST":
+            user_id=req.POST.get("user_id")
+            DisplyName=req.POST.get("DisplyName")
+            Email=req.POST.get("Email")
+            contractnumber=req.POST.get("contractnumber")
+            website=req.POST.get("website")
 
-    return render(req,"users/editeProfile.html",{"data":data})
+            current_user.DisplyName = DisplyName
+            current_user.email = Email
+            current_user.ContractNumber = contractnumber
+            current_user.WebLink = website
+            if req.FILES.get("profile_pic"):
+                current_user.Photo = req.FILES.get("profile_pic")
+            current_user.save()
+            return redirect("userProfile")
+    elif current_user.UserType == "jobseekers":                                                   #for jobsee
+        if req.method == "POST":
+            user_id=req.POST.get("user_id")
+            DisplyName=req.POST.get("DisplyName")
+            Email=req.POST.get("Email")
+            skill=req.POST.get("skill")
+            contractnumber=req.POST.get("contractnumber")
+            website=req.POST.get("website")
+
+            current_user.DisplyName = DisplyName
+            current_user.email = Email
+            viewer_data = JobseekersProfileModel.objects.get(user=current_user)
+            viewer_data.Skills = skill
+            current_user.ContractNumber = contractnumber
+            current_user.WebLink = website
+            if req.FILES.get("profile_pic"):
+                current_user.Photo = req.FILES.get("profile_pic")
+            current_user.save()
+            viewer_data.save()
+            return redirect("userProfile")
+    return render(req,"users/editeProfile.html")
 
 @login_required
 def deleteProfile(req):
@@ -100,7 +129,7 @@ def addJobPage(req):
             num_openings=req.POST.get("num_openings")
             category=req.POST.get("category")
             job_description=req.POST.get("job_description")
-            qualifications=req.POST.get("qualifications")
+            Skills=req.POST.get("Skills")
             salary=req.POST.get("salary")
             deadline=req.POST.get("deadline")
             data=CreateJobModel(
@@ -112,9 +141,9 @@ def addJobPage(req):
                 com_location=company_location,
                 job_title=job_title,
                 num_openings=num_openings,
-                category=category,
+                Category=category,
                 job_description=job_description,
-                qualifications=qualifications,
+                skills=Skills,
                 salary=salary,
                 deadline=deadline,
             )
@@ -134,10 +163,21 @@ def allPost(req):
     return render(req,"content/allPost.html",{"data":data})
 
 @login_required
+def allApplyJob(req):                                                       #all apply job for indibijul user
+    CU=req.user
+    data=ApplyModel.objects.filter(user=CU)
+    return render(req,"content/allApplyJob.html",{"data":data})
+
+@login_required
 def deleteJob(req,job_id):
     data=CreateJobModel.objects.get(id=job_id)
     data.delete()
     return redirect("allPost")
+
+@login_required
+def viewJob(req,job_id):
+    data=CreateJobModel.objects.get(id=job_id)
+    return render(req,"content/viewJob.html",{"data":data})
 
 @login_required
 def editeJob(req,job_id):
@@ -150,13 +190,16 @@ def editeJob(req,job_id):
             company_name=req.POST.get("company_name")
             company_title=req.POST.get("company_title")
             company_description=req.POST.get("company_description")
-            company_logo=req.FILES.get("company_logo")
+            if req.FILES.get("company_logo"):
+                company_logo=req.FILES.get("company_logo")
+            else:
+                company_logo=data.com_logo
             company_location=req.POST.get("company_location")
             job_title=req.POST.get("job_title")
             num_openings=req.POST.get("num_openings")
             category=req.POST.get("category")
             job_description=req.POST.get("job_description")
-            qualifications=req.POST.get("qualifications")
+            Skills=req.POST.get("Skills")
             salary=req.POST.get("salary")
             deadline=req.POST.get("deadline")
             data=CreateJobModel(
@@ -169,12 +212,60 @@ def editeJob(req,job_id):
                 com_location=company_location,
                 job_title=job_title,
                 num_openings=num_openings,
-                category=category,
+                Category=category,
                 job_description=job_description,
-                qualifications=qualifications,
+                skills=Skills,
                 salary=salary,
                 deadline=deadline,
             )
             data.save()
             return redirect("allPost")
     return render(req,"content/editeJob.html",{"data":data})
+
+@login_required
+def searchPage(request):
+    query = request.GET.get('query')
+    jobs = CreateJobModel.objects.filter(Q(job_title__icontains=query) 
+                                    |Q(Category__icontains=query) 
+                                    |Q(skills__icontains=query))
+    context={
+        'query':query,
+        'jobs':jobs
+    }
+    return render(request,"content/job_search.html",context)
+
+@login_required
+def recommendedPage(req):                                                        # this is for recommend
+    CU = req.user
+    my_skill = CU.Seekers_Profile.Skills
+    info = CreateJobModel.objects.filter(skills=my_skill)
+    return render(req,"content/recomendedPage.html",{"data":info})
+
+@login_required
+def applyJobPage(req,job_id):
+    curent_user=req.user
+
+
+    Job=CreateJobModel.objects.get(id=job_id)
+
+    context = {
+        'jobs':Job,
+    }
+
+    if req.method == "POST":
+        coverLetter=req.POST.get("coverLetter")
+        skills=req.POST.get("skills")
+        resume=req.FILES.get("resume")
+
+        apply = ApplyModel(
+            user=curent_user,
+            job=Job,
+            Cover_Letter=coverLetter,
+            skill=skills,
+            Upload_Resume=resume, 
+        )
+
+        apply.save()
+        return redirect("findjobPage")
+    
+    return render(req, "content/applyJobPage.html", context)

@@ -1,3 +1,40 @@
+.search-container {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 500px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px auto;
+
+}
+
+.search-input {
+    padding: 10px;
+    border: none;
+    outline: none;
+    width: 300px;
+}
+
+.search-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+.cards{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
 .card {
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -6,6 +43,7 @@
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
+    width: 40%;
 }
 
 .card h2 {

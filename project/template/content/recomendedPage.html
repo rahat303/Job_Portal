@@ -1,0 +1,49 @@
+{% extends "include/m.html" %}
+{% block title %}Home Page{% endblock title %}
+{% block body %}
+{% if user.UserType == "jobseekers" %}
+    <h1>This Jobs is recommended for you.</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/findJob.css">
+</head>
+    <div class="cards">
+        {% for i in data %}
+    <div class="card">
+        <div id="logo">
+            <h2>Job Offering at_<span id="company-name-display"></span></h2>
+            <img class="company-logo-display"src="/{{i.com_logo}}" alt="Company Logo">
+        </div>
+        <div class="company-info">
+            <h3 id="company-title-display"><strong>Company name:</strong>{{i.com_name}}</h3>
+            <p id="company-description-display"><strong>Company title:</strong>{{i.com_title}}</p>
+            <p id="company-description-display"><strong>Company description:</strong>{{i.com_description}}</p>
+            
+            <p><strong>Location:</strong> <span id="company-location-display">{{i.com_location}}</span></p>
+        </div>
+        <div class="job-info">
+            <h3 id="job_det">Job Details</h3>
+            <h3 id="company-title-display"><strong>Job Title:</strong>{{i.job_title}}</h3>
+            <p><strong>Number of Openings:</strong> <span id="num-openings-display">{{i.num_openings}}</span></p>
+            <p><strong>Category:</strong> <span id="category-display"></span>{{i.Category}}</p>
+            <p><strong>Description:</strong> <span id="job-description-display"></span>{{i.job_description}}</p>
+            <p><strong>Qualifications:</strong> <span id="qualifications-display"></span>{{i.skills}}</p>
+            <p><strong>Salary:</strong> <span id="salary-display"></span>{{i.salary}}</p>
+            <p><strong>Application Deadline:</strong> <span id="deadline-display">{{i.deadline}}</span></p>
+        </div>
+        <div class="button-group">
+            <a href="{% url 'applyJobPage' i.id %}" class="btn apply">Apply Job</a>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</body>
+</html>
+{% else %}
+<h3>This page is not for you.</h3>
+{% endif %}
+{% endblock body %}

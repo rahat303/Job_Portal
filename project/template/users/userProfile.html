@@ -9,23 +9,39 @@
     <link rel="stylesheet" href="/static/userProfile.css">
 </head>
 <body>
-    <div class="profile-container">
-        <img src="/{{ user.profile1.Photo }}" alt="Profile Picture" class="profile-pic">
-        <h1 class="username">{{ user.DisplyName }}</h1>
-        <p class="bio">{{ user.profile1.Bio }}</p>
-        <ul class="info-list">
-            <li><strong>User Type:</strong>{{ user.UserType }}</li>
-            <li><strong>Email:</strong>{{ user.email }}</li>
-            <li><strong>Contract Number:</strong>{{ user.profile1.ContractNumber }}</li>
-            <li><strong>Website:</strong>{{ user.profile1.WebLink }}</li>
-        </ul>
-        <div class="button-container">
-            <a href="{% url 'editeProfile' %}"><button class="edit-button">Edit Profile</button></a>
-            {% if user.UserType == "recruiters" %}
-            <a href="{% url 'allPost' %}"><button class="all-posts-button">View All Posts</button></a>
-            {% endif %}
+    {% if user.UserType == "recruiters" %}
+        <div class="profile-container">
+            <img src="/{{ user.Photo }}" alt="Profile Picture" class="profile-pic">
+            <h1 class="username">{{ user.DisplyName }}</h1>
+            <p class="bio">{{ user.Bio }}</p>
+            <ul class="info-list">
+                <li><strong>User Type:</strong>{{ user.UserType }}</li>
+                <li><strong>Email:</strong>{{ user.email }}</li>
+                <li><strong>Contract Number:</strong>{{ user.ContractNumber }}</li>
+                <li><strong>Website:</strong>{{ user.WebLink }}</li>
+            </ul>
+            <div class="button-container">
+                <a href="{% url 'editeProfile' %}"><button class="edit-button">Edit Profile</button></a>
+                <a href="{% url 'allPost' %}"><button class="all-posts-button">View All Posts</button></a>
+            </div>
         </div>
-    </div>
+    {% elif user.UserType == "jobseekers" %}
+        <div class="profile-container">
+            <img src="/{{ user.Photo }}" alt="Profile Picture" class="profile-pic">
+            <h1 class="username">{{ user.DisplyName }}</h1>
+            <p class="bio">{{ user.Bio }}</p>
+            <ul class="info-list">
+                <li><strong>User Type:</strong>{{ user.UserType }}</li>
+                <li><strong>Email:</strong>{{ user.email }}</li>
+                <li><strong>Skill:</strong>{{ user.Seekers_Profile.Skills }}</li>
+                <li><strong>Contract Number:</strong>{{ user.ContractNumber }}</li>
+                <li><strong>Website:</strong>{{ user.WebLink }}</li>
+            </ul>
+            <div class="button-container">
+                <a href="{% url 'editeProfile' %}"><button class="edit-button">Edit Profile</button></a>
+                <a href="{% url 'allApplyJob' %}"><button class="all-posts-button">View Apply Job</button></a>
+            </div>
+    {% endif %}
 </body>
 </html>
 {% endblock body %}

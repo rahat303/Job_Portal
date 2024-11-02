@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="static/createjobPage.css">
 </head>
 <body>
+    
+    {% if user.UserType == "recruiters" %}
     <div class="job-form">
         <h1>Create Job Listing</h1>
         <form action="" method="POST" enctype="multipart/form-data">
@@ -36,13 +38,22 @@
             <input type="number" id="num-openings" name="num_openings" required>
 
             <label for="category">Category:</label>
-            <input type="text" id="category" name="category" required>
+            <select name="category" required>
+                <option value="" disabled selected>Select Job Type</option>
+                <option value="full_time">Full Time</option>
+                <option value="part_time">Part Time</option>
+            </select>
 
             <label for="job-description">Job Description:</label>
             <textarea id="job-description" name="job_description" rows="4" required></textarea>
 
-            <label for="qualifications">Qualifications:</label>
-            <textarea id="qualifications" name="qualifications" rows="4" required></textarea>
+            <label for="qualifications">Required Skills:</label>
+            <select name="skills" id="">
+                <option value="" disabled selected>Select Skills</option>
+                <option value="programming">Programming</option>
+                <option value="networking">Networking</option>
+                <option value="hardware">Hardware</option>
+            </select>
 
             <label for="salary">Salary:</label>
             <input type="text" id="salary" name="salary" required>
@@ -53,6 +64,10 @@
             <button type="submit" class="btn">Submit Job Listing</button>
         </form>
     </div>
+    {% else %}
+    <p>You are not authorized to view this page.</p>
+    {% endif %}
+        
 </body>
 </html>
 {% endblock body %}

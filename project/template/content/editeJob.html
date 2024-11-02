@@ -27,7 +27,7 @@
 
             <label for="company-logo">Company Logo:</label>
             <img src="/{{data.com_logo}}" alt="company logo" height="120"><br>
-            <input type="file" id="company-logo" name="company_logo" accept="image/*"  value="{{data.com_logo}}" required>
+            <input type="file" id="company-logo" name="company_logo">
 
             <label for="company-location">Company Location:</label>
             <input type="text" id="company-location" name="company_location"  value="{{data.com_location}}" required>
@@ -38,14 +38,27 @@
             <label for="num-openings">Number of Openings:</label>
             <input type="number" id="num-openings" name="num_openings"  value="{{data.num_openings}}" required>
 
-            <label for="category">Category:</label>
-            <input type="text" id="category" name="category"  value="{{data.category}}" required>
+            <label for="category">Category</label>
+            <select type="text" name="category" required>
+                <option value="{{data.Category}}" selected>
+                    {% if data.Category == 'full_time' %}
+                    Full Time
+                    {% elif data.Category == 'part_time' %}
+                    Part Time
+                    {% endif %}
+                </option>
+                {% if data.Category == 'full_time' %}
+                <option value="part_time">Part Time</option>
+                {% elif data.Category == 'part_time' %}
+                <option value="full_time">Full Time</option>
+                {% endif %}
+            </select>
 
             <label for="job-description">Job Description:</label>
             <textarea id="job-description" name="job_description" rows="4"  value="" required>{{data.job_description}}</textarea>
 
-            <label for="qualifications">Qualifications:</label>
-            <textarea id="qualifications" name="qualifications" rows="4"  value="" required>{{data.qualifications}}</textarea>
+            <label for="qualifications">Required Skills:</label>
+            <input type="text" id="skills" name="skills" value="{{data.skills}}" required>
 
             <label for="salary">Salary:</label>
             <input type="text" id="salary" name="salary"  value="{{data.salary}}" required>

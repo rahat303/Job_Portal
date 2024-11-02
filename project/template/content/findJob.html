@@ -7,10 +7,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="static/allPage.css">
+    <link rel="stylesheet" href="/static/findJob.css">
 </head>
-<body>
-    {% for i in data %}
+    <div class="search-bar mb-4">
+        <div class="input-group">
+            <form action=" {% url 'searchPage' %} " method="GET">
+                <input type="text" class="form-control" name="query" placeholder="Search for jobs..." id="search-input">
+                <div class="input-group-append">
+                    <button class="btn btn-success" id="search-button">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="cards">
+        {% for i in data %}
     <div class="card">
         <div id="logo">
             <h2>Job Offering at_<span id="company-name-display"></span></h2>
@@ -20,26 +31,26 @@
             <h3 id="company-title-display"><strong>Company name:</strong>{{i.com_name}}</h3>
             <p id="company-description-display"><strong>Company title:</strong>{{i.com_title}}</p>
             <p id="company-description-display"><strong>Company description:</strong>{{i.com_description}}</p>
-            
             <p><strong>Location:</strong> <span id="company-location-display">{{i.com_location}}</span></p>
         </div>
         <div class="job-info">
             <h3 id="job_det">Job Details</h3>
             <h3 id="company-title-display"><strong>Job Title:</strong>{{i.job_title}}</h3>
             <p><strong>Number of Openings:</strong> <span id="num-openings-display">{{i.num_openings}}</span></p>
-            <p><strong>Category:</strong> <span id="category-display"></span>{{i.category}}</p>
+            <p><strong>Category:</strong> <span id="category-display"></span>{{i.Category}}</p>
             <p><strong>Description:</strong> <span id="job-description-display"></span>{{i.job_description}}</p>
-            <p><strong>Qualifications:</strong> <span id="qualifications-display"></span>{{i.qualifications}}</p>
+            <p><strong>Qualifications:</strong> <span id="qualifications-display"></span>{{i.skills}}</p>
             <p><strong>Salary:</strong> <span id="salary-display"></span>{{i.salary}}</p>
             <p><strong>Application Deadline:</strong> <span id="deadline-display">{{i.deadline}}</span></p>
         </div>
         <div class="button-group">
         {% if user.UserType == "jobseekers" %}
-            <a href="apply.html" class="btn apply">Apply Job</a>
+            <a href="{% url 'applyJobPage' i.id %}" class="btn apply">Apply Job</a>
         {% endif %}
         </div>
     </div>
     {% endfor %}
+    </div>
 </body>
 </html>
 {% endblock body %}
