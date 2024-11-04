@@ -57,8 +57,28 @@
             <label for="job-description">Job Description:</label>
             <textarea id="job-description" name="job_description" rows="4"  value="" required>{{data.job_description}}</textarea>
 
-            <label for="qualifications">Required Skills:</label>
-            <input type="text" id="skills" name="skills" value="{{data.skills}}" required>
+            <label for="qualifications">Required Skill:</label>
+                <select id="skills" name="skill" required>
+                    <option value="{{ data.skills }}" selected >
+                        {% if data.skills == "programming" %}
+                        Programming
+                        {% elif data.skills == "networking" %}
+                        Networking
+                        {% elif data.skills == "hardware" %}
+                        Hardware
+                        {% endif %}
+                    </option>
+                    {% if data.skills == "programming" %}
+                        <option value="networking">Networking</option>
+                        <option value="hardware">Hardware</option>
+                    {% elif data.skills == "networking" %}
+                        <option value="programming">Programming</option>
+                        <option value="hardware">Hardware</option>
+                    {% elif data.skills == "hardware" %}
+                        <option value="programming">Programming</option>
+                        <option value="networking">Networking</option>
+                    {% endif %}
+                </select>
 
             <label for="salary">Salary:</label>
             <input type="text" id="salary" name="salary"  value="{{data.salary}}" required>
@@ -72,3 +92,8 @@
 </body>
 </html>
 {% endblock body %}
+
+
+
+<label for="qualifications">Required Skills:</label>
+            <input type="text" id="skills" name="skills" value="{{data.skills}}" required>

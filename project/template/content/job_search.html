@@ -38,7 +38,7 @@
         </div>
         <div class="button-group">
         {% if user.UserType == "jobseekers" %}
-            <a href={% url "applyJob" i.id %} class="btn apply">Apply Job</a>
+            <a href={% url 'applyJobPage' i.id %} class="btn apply">Apply Job</a>
         {% endif %}
         </div>
     </div>

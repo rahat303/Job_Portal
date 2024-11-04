@@ -48,7 +48,7 @@
             <textarea id="job-description" name="job_description" rows="4" required></textarea>
 
             <label for="qualifications">Required Skills:</label>
-            <select name="skills" id="">
+            <select name="skill" required>
                 <option value="" disabled selected>Select Skills</option>
                 <option value="programming">Programming</option>
                 <option value="networking">Networking</option>
@@ -67,7 +67,6 @@
     {% else %}
     <p>You are not authorized to view this page.</p>
     {% endif %}
-        
 </body>
 </html>
 {% endblock body %}

@@ -46,17 +46,32 @@
                 <label for="username">Display Name</label>
                 <input type="text" id="username" name="DisplyName" value="{{user.DisplyName}}">
             </div>
-            <div class="form-group">
+            <div class="form-group"> 
                 <label for="email">Email</label>
                 <input type="email" id="email" name="Email" value="{{user.email}}">
             </div>
             <div class="form-group">
-                <label for="email">Skill</label>
-                <select name="skill" id="">
-                    <option value="" disabled selected>Select Skills</option>
-                    <option value="programming">Programming</option>
-                    <option value="networking">Networking</option>
-                    <option value="hardware">Hardware</option>
+                <label for="skills">Skills:</label>
+                <select id="skills" name="skill" required>
+                    <option value="{{ user.Seekers_Profile.Skills }}" selected >
+                        {% if user.Seekers_Profile.Skills == "programming" %}
+                        Programming
+                        {% elif user.Seekers_Profile.Skills == "networking" %}
+                        Networking
+                        {% elif user.Seekers_Profile.Skills == "hardware" %}
+                        Hardware
+                        {% endif %}
+                    </option>
+                    {% if user.Seekers_Profile.Skills == "programming" %}
+                        <option value="networking">Networking</option>
+                        <option value="hardware">Hardware</option>
+                    {% elif user.Seekers_Profile.Skills == "networking" %}
+                        <option value="programming">Programming</option>
+                        <option value="hardware">Hardware</option>
+                    {% elif user.Seekers_Profile.Skills == "hardware" %}
+                        <option value="programming">Programming</option>
+                        <option value="networking">Networking</option>
+                    {% endif %}
                 </select>
             </div>
             <div class="form-group">

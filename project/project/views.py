@@ -199,7 +199,7 @@ def editeJob(req,job_id):
             num_openings=req.POST.get("num_openings")
             category=req.POST.get("category")
             job_description=req.POST.get("job_description")
-            Skills=req.POST.get("Skills")
+            skill=req.POST.get("skill")
             salary=req.POST.get("salary")
             deadline=req.POST.get("deadline")
             data=CreateJobModel(
@@ -214,7 +214,7 @@ def editeJob(req,job_id):
                 num_openings=num_openings,
                 Category=category,
                 job_description=job_description,
-                skills=Skills,
+                skills=skill,
                 salary=salary,
                 deadline=deadline,
             )
@@ -225,8 +225,9 @@ def editeJob(req,job_id):
 @login_required
 def searchPage(request):
     query = request.GET.get('query')
-    jobs = CreateJobModel.objects.filter(Q(job_title__icontains=query) 
-                                    |Q(Category__icontains=query) 
+    jobs = CreateJobModel.objects.filter(Q(job_title__icontains=query)
+                                    |Q(Category__icontains=query)
+                                    |Q(com_name__icontains=query)
                                     |Q(skills__icontains=query))
     context={
         'query':query,
@@ -237,21 +238,20 @@ def searchPage(request):
 @login_required
 def recommendedPage(req):                                                        # this is for recommend
     CU = req.user
-    my_skill = CU.Seekers_Profile.Skills
-    info = CreateJobModel.objects.filter(skills=my_skill)
-    return render(req,"content/recomendedPage.html",{"data":info})
+    if CU.UserType == "jobseekers":
+        my_skill = CU.Seekers_Profile.Skills
+        info = CreateJobModel.objects.filter(skills=my_skill)
+        return render(req,"content/recomendedPage.html",{"data":info})
+    elif CU.UserType == "recruiters":
+        return render(req,"content/recomendedPage.html")
 
 @login_required
 def applyJobPage(req,job_id):
     curent_user=req.user
-
-
     Job=CreateJobModel.objects.get(id=job_id)
-
     context = {
         'jobs':Job,
     }
-
     if req.method == "POST":
         coverLetter=req.POST.get("coverLetter")
         skills=req.POST.get("skills")
@@ -264,8 +264,6 @@ def applyJobPage(req,job_id):
             skill=skills,
             Upload_Resume=resume, 
         )
-
         apply.save()
         return redirect("findjobPage")
-    
     return render(req, "content/applyJobPage.html", context)

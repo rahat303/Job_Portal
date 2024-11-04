@@ -39,9 +39,9 @@ class CreateJobModel(models.Model):
         ("part_time","Part Time")
     ]
     SKILLS = [
-        ('programming', 'Programming'),
-        ('networking', 'Networking'),
-        ('hardware', 'Hardware'),
+        ("programming", "Programming"),
+        ("networking", "Networking"),
+        ("hardware", "Hardware"),
     ]
     user=models.ForeignKey(CustomUserModel,on_delete=models.CASCADE,null=True)
     com_name = models.CharField(max_length=255,null=True)
@@ -53,7 +53,7 @@ class CreateJobModel(models.Model):
     num_openings = models.PositiveIntegerField(null=True)
     Category = models.CharField(choices=Job_Type,max_length=255,null=True)
     job_description = models.TextField(null=True)
-    skills = models.CharField(max_length=100,choices=SKILLS,null=True)
+    skills = models.CharField(choices=SKILLS,max_length=200,null=True)
     salary = models.CharField(max_length=100,null=True)  # Consider using DecimalField for precise salary values
     deadline = models.DateField(null=True)
 

@@ -16,7 +16,7 @@
             <tr>
                 <th>Job Title</th>
                 <th>Company Name</th>
-                <th>Qualifications</th>
+                <th>Required Skill</th>
                 <th>Image</th>
                 <th>Action</th>
             </tr>
@@ -26,7 +26,7 @@
             <tr>
                 <td>{{i.job_title}}</td>
                 <td>{{i.com_name}}</td>
-                <td>{{i.qualifications}}</td>
+                <td>{{i.skills}}</td>
                 <td><img src="/{{i.com_logo}}" alt="Company Logo"></td>
                 <td>
                     <a href="{% url "editeJob" i.id %}" class="edit-button">Edit Job</a>
