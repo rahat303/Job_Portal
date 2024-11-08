@@ -129,7 +129,7 @@ def addJobPage(req):
             num_openings=req.POST.get("num_openings")
             category=req.POST.get("category")
             job_description=req.POST.get("job_description")
-            Skills=req.POST.get("Skills")
+            Skils=req.POST.get("skill")
             salary=req.POST.get("salary")
             deadline=req.POST.get("deadline")
             data=CreateJobModel(
@@ -143,7 +143,7 @@ def addJobPage(req):
                 num_openings=num_openings,
                 Category=category,
                 job_description=job_description,
-                skills=Skills,
+                skills=Skils,
                 salary=salary,
                 deadline=deadline,
             )
